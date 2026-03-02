@@ -90,4 +90,3 @@ export function isChromeBased(navigator: Navigator | null): boolean {
 	const ua = getUserAgent(navigator);
 	return ua.indexOf("Chrome") !== -1;
 }
-

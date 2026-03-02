@@ -345,8 +345,8 @@ function setupPanner(
 
 	// Update connections if sound is playing
 	if (!sound._paused) {
-		(sound._parent as any).pause(sound._id, true);
-		(sound._parent as any).play(sound._id, true);
+		sound._parent.pause(sound._id, true);
+		sound._parent.play(sound._id, true);
 	}
 }
 

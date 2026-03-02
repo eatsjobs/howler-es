@@ -37,7 +37,7 @@ export const loadBuffer = (self: Howl) => {
 					self._emit(
 						"loaderror",
 						null,
-						"Failed loading audio file with status: " + response.status + ".",
+						`Failed loading audio file with status: ${response.status}.`,
 					);
 					return;
 				}
@@ -76,13 +76,13 @@ export const decodeAudioData = (arraybuffer: ArrayBuffer, self: Howl) => {
 
 	if (
 		typeof Promise !== "undefined" &&
-		Howler.ctx!.decodeAudioData.length === 1
+		Howler.ctx?.decodeAudioData.length === 1
 	) {
-		(Howler.ctx!.decodeAudioData(arraybuffer) as Promise<AudioBuffer>)
+		(Howler.ctx?.decodeAudioData(arraybuffer) as Promise<AudioBuffer>)
 			.then(success)
 			.catch(error);
 	} else {
-		Howler.ctx!.decodeAudioData(arraybuffer, success, error);
+		Howler.ctx?.decodeAudioData(arraybuffer, success, error);
 	}
 };
 

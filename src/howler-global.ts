@@ -77,8 +77,8 @@ export class HowlerGlobal {
 					return this;
 				}
 
-				if (this.usingWebAudio && this.ctx) {
-					this.masterGain!.gain.setValueAtTime(vol, this.ctx.currentTime);
+				if (this.usingWebAudio && this.ctx && this.masterGain) {
+					this.masterGain.gain.setValueAtTime(vol, this.ctx.currentTime);
 				}
 
 				for (let i = 0; i < this._howls.length; i++) {
@@ -86,7 +86,7 @@ export class HowlerGlobal {
 						const ids = this._howls[i]._getSoundIds();
 						for (let j = 0; j < ids.length; j++) {
 							const sound = this._howls[i]._soundById(ids[j]);
-							if (sound && sound._node && isHTMLAudioElement(sound._node)) {
+							if (sound?._node && isHTMLAudioElement(sound._node)) {
 								sound._node.volume = sound._volume * vol;
 							}
 						}
@@ -107,8 +107,8 @@ export class HowlerGlobal {
 
 		this._muted = muted;
 
-		if (this.usingWebAudio && this.ctx) {
-			this.masterGain!.gain.setValueAtTime(
+		if (this.usingWebAudio && this.ctx && this.masterGain) {
+			this.masterGain.gain.setValueAtTime(
 				muted ? 0 : this._volume,
 				this.ctx.currentTime,
 			);
@@ -119,7 +119,7 @@ export class HowlerGlobal {
 				const ids = this._howls[i]._getSoundIds();
 				for (let j = 0; j < ids.length; j++) {
 					const sound = this._howls[i]._soundById(ids[j]);
-					if (sound && sound._node && isHTMLAudioElement(sound._node)) {
+					if (sound?._node && isHTMLAudioElement(sound._node)) {
 						sound._node.muted = muted ? true : sound._muted;
 					}
 				}
@@ -201,7 +201,7 @@ export class HowlerGlobal {
 					if (typeof test.oncanplaythrough === "undefined") {
 						this._canPlayEvent = "canplay";
 					}
-				} catch (e) {
+				} catch {
 					this.noAudio = true;
 				}
 			} else {
@@ -214,7 +214,7 @@ export class HowlerGlobal {
 			if (test.muted) {
 				this.noAudio = true;
 			}
-		} catch (e) {}
+		} catch {}
 
 		if (!this.noAudio) {
 			this._setupCodecs();
@@ -229,7 +229,7 @@ export class HowlerGlobal {
 		try {
 			audioTest =
 				typeof window.Audio !== "undefined" ? new window.Audio() : null;
-		} catch (err) {
+		} catch {
 			return this;
 		}
 
@@ -315,7 +315,7 @@ export class HowlerGlobal {
 					).Audio() as HTMLAudioElementWithUnlocked;
 					audioNode._unlocked = true;
 					this._releaseHtml5Audio(audioNode);
-				} catch (e) {
+				} catch {
 					this.noAudio = true;
 					break;
 				}
@@ -327,8 +327,7 @@ export class HowlerGlobal {
 					for (let j = 0; j < ids.length; j++) {
 						const sound = this._howls[i]._soundById(ids[j]);
 						if (
-							sound &&
-							sound._node &&
+							sound?._node &&
 							isHTMLAudioElement(sound._node) &&
 							!sound._node._unlocked
 						) {
@@ -341,13 +340,14 @@ export class HowlerGlobal {
 
 			this._autoResume();
 
-			const source = this.ctx!.createBufferSource();
+			const ctx = this.ctx as AudioContext;
+			const source = ctx.createBufferSource();
 			source.buffer = this._scratchBuffer;
-			source.connect(this.ctx!.destination);
+			source.connect(ctx.destination);
 			source.start(0);
 
-			if (typeof this.ctx!.resume === "function") {
-				this.ctx!.resume();
+			if (typeof ctx.resume === "function") {
+				ctx.resume();
 			}
 
 			source.onended = () => {
@@ -453,7 +453,7 @@ export class HowlerGlobal {
 				}
 			};
 
-			this.ctx!.suspend().then(handleSuspension, handleSuspension);
+			this.ctx?.suspend().then(handleSuspension, handleSuspension);
 		}, 30000);
 	}
 

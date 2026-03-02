@@ -74,7 +74,7 @@ export class Sound {
 				this._node = gainNode as GainNodeWithBufferSource;
 				this._node.gain.setValueAtTime(volume, Howler.ctx.currentTime);
 				(this._node as { paused?: boolean }).paused = true;
-				this._node.connect(Howler.masterGain!);
+				this._node.connect(Howler.masterGain as GainNode);
 			}
 		} else if (!Howler.noAudio) {
 			this._node = Howler._obtainHtml5Audio();

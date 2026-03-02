@@ -12,7 +12,7 @@ export { setupAudioContext } from "./audio-context";
 export {
 	decodeAudioData,
 	loadBuffer,
-	loadSound
+	loadSound,
 } from "./audio-loader";
 export {
 	getIOSVersion,
@@ -22,6 +22,5 @@ export {
 	isChromeBased,
 	isIOS,
 	isOpera,
-	isSafari
+	isSafari,
 } from "./light-ua-parser";
-

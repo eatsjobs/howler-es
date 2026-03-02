@@ -33,7 +33,7 @@ export type {
 	/** Spatial audio state for a Howl instance. */
 	SpatialHowlState,
 	/** Spatial audio state for a Sound instance. */
-	SpatialSoundState
+	SpatialSoundState,
 } from "./spatial-plugin";
 /**
  * Spatial audio plugin for Howler.js.

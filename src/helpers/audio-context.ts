@@ -12,7 +12,7 @@ export const setupAudioContext = () => {
 		} else {
 			Howler.usingWebAudio = false;
 		}
-	} catch (e) {
+	} catch {
 		Howler.usingWebAudio = false;
 	}
 

@@ -184,7 +184,7 @@ class Howl {
 			let ext: string | null;
 			const str = (this._src as string[])[i];
 
-			if (this._format && this._format[i]) {
+			if (this._format?.[i]) {
 				ext = this._format[i];
 			} else {
 				if (typeof str !== "string") {
@@ -374,7 +374,7 @@ class Howl {
 				}
 			};
 
-			if (Howler.state === "running" && Howler.ctx!.state !== "interrupted") {
+			if (Howler.state === "running" && Howler.ctx?.state !== "interrupted") {
 				playWebAudio();
 			} else {
 				this._playLock = true;
@@ -536,7 +536,8 @@ class Howl {
 						this._cleanBuffer(sound._node);
 					} else if (
 						isHTMLAudioElement(sound._node) &&
-						(!isNaN(sound._node.duration) || sound._node.duration === Infinity)
+						(!Number.isNaN(sound._node.duration) ||
+							sound._node.duration === Infinity)
 					) {
 						sound._node.pause();
 					}
@@ -587,7 +588,8 @@ class Howl {
 						}
 					} else if (
 						isHTMLAudioElement(sound._node) &&
-						(!isNaN(sound._node.duration) || sound._node.duration === Infinity)
+						(!Number.isNaN(sound._node.duration) ||
+							sound._node.duration === Infinity)
 					) {
 						sound._node.currentTime = sound._start || 0;
 						sound._node.pause();
@@ -642,7 +644,7 @@ class Howl {
 				if (this._webAudio && sound._node && isGainNode(sound._node)) {
 					sound._node.gain.setValueAtTime(
 						muted ? 0 : sound._volume,
-						Howler.ctx!.currentTime,
+						Howler.ctx?.currentTime ?? 0,
 					);
 				} else if (sound._node && isHTMLAudioElement(sound._node)) {
 					sound._node.muted = Howler._muted ? true : muted;
@@ -722,7 +724,10 @@ class Howl {
 						isGainNode(sound._node) &&
 						!sound._muted
 					) {
-						sound._node.gain.setValueAtTime(volume, Howler.ctx!.currentTime);
+						sound._node.gain.setValueAtTime(
+							volume,
+							Howler.ctx?.currentTime ?? 0,
+						);
 					} else if (
 						sound._node &&
 						isHTMLAudioElement(sound._node) &&
@@ -777,7 +782,7 @@ class Howl {
 				}
 
 				if (this._webAudio && !sound._muted) {
-					const currentTime = Howler.ctx!.currentTime;
+					const currentTime = Howler.ctx?.currentTime ?? 0;
 					const end = currentTime + len / 1000;
 					sound._volume = from;
 					if (sound._node && isGainNode(sound._node)) {

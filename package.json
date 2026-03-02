@@ -8,6 +8,7 @@
 	"keywords": [
 		"howler",
 		"howler.js",
+		"howler.es",
 		"audio",
 		"sound",
 		"web audio",
@@ -26,11 +27,13 @@
 	"scripts": {
 		"build": "tsdown",
 		"size": "node scripts/check-size.js",
-		"release": "npm run build && git add dist && git commit -m 'build: update dist files' && npm publish"
+		"release": "npm run build && git add dist && git commit -m 'build: update dist files' && npm publish",
+		"lint": "biome check",
+		"lint:fix": "biome check --write"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/core": "~0.18.2",
-		"@biomejs/biome": "2.3.7",
+		"@biomejs/biome": "2.4.5",
 		"publint": "~0.3.15",
 		"tsdown": "~0.16.6",
 		"typescript": "~5.9.3"

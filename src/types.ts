@@ -97,8 +97,6 @@ export interface QueueItem {
 	action: () => void;
 }
 
-
-
 /**
  * Extended HTMLAudioElement with custom properties used by Howler.
  *
