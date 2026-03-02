@@ -1,18 +1,16 @@
 [![howler.js](https://s3.amazonaws.com/howler.js/howler-logo.png "howler.js")](https://howlerjs.com)
 
-# Sponsors
-Thank you to our sponsors for their support of this project:
+# @eatsjobs/howler-es
 
-### Recall.ai - API for meeting recordings
-If you’re looking for a meeting recording API, consider checking out [Recall.ai](https://www.recall.ai/product/meeting-recording-api?utm_source=github&utm_medium=sponsorship&utm_campaign=goldfire-howlerjs), an API that records Zoom, Google Meet, Microsoft Teams, in-person meetings, and more.
+> **TypeScript + ES Modules port of [howler.js](https://howlerjs.com)** — all the original functionality, rewritten in TypeScript and distributed exclusively as ES Modules.
+>
+> Original library by [James Simpson](https://twitter.com/GoldFireStudios) / [GoldFire Studios](https://goldfirestudios.com). All credit for the audio engine goes to them.
 
 # Description
 
 [howler.js](https://howlerjs.com) is an audio library for the modern web. It defaults to [Web Audio API](http://webaudio.github.io/web-audio-api/) and falls back to [HTML5 Audio](https://html.spec.whatwg.org/multipage/embedded-content.html#the-audio-element). This makes working with audio in JavaScript easy and reliable across all platforms.
 
 Additional information, live demos and a user showcase are available at [howlerjs.com](https://howlerjs.com).
-
-Follow on Twitter for howler.js and development-related discussion: [@GoldFireStudios](https://twitter.com/goldfirestudios).
 
 ## Features
 
