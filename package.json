@@ -29,6 +29,8 @@
 	"scripts": {
 		"serve-tests": "npx serve .",
 		"build": "tsdown",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
 		"size": "node scripts/check-size.js",
 		"preversion": "npm run lint && npm run build",
 		"postversion": "git push --follow-tags",
@@ -38,10 +40,16 @@
 	"devDependencies": {
 		"@arethetypeswrong/core": "~0.18.2",
 		"@biomejs/biome": "2.4.5",
+		"@playwright/browser-chromium": "^1.48.2",
+		"@testing-library/user-event": "^14.6.1",
+		"@vitest/browser": "^4.0.18",
+		"@vitest/browser-playwright": "^4.0.18",
+		"@vitest/ui": "^4.0.18",
 		"publint": "~0.3.18",
 		"serve": "^14.2.5",
 		"tsdown": "~0.20.3",
-		"typescript": "~5.9.3"
+		"typescript": "~5.9.3",
+		"vitest": "^4.0.18"
 	},
 	"main": "dist/index.js",
 	"module": "dist/index.js",
