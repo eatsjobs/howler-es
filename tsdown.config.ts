@@ -13,13 +13,13 @@ export default defineConfig({
 	},
 	publint: true,
 	attw: {
-		profile: "esmOnly",
+		profile: "esm-only",
 	},
 	report: true,
 	banner: {
-		js: "// howler.js v3.0.0-alpha.1\n// howlerjs.com\n// (c) 2013-2025, James Simpson of GoldFire Studios\n// goldfirestudios.com\n// MIT License\n",
-	}, 
+		js: `// howler.js v3.0.0-alpha.1\n// howlerjs.com\n// (c) 2013-2025, James Simpson of GoldFire Studios\n// goldfirestudios.com\n// MIT License\n Ported to ES Modules by @eatsjobs`,
+	},
 	// Target browsers that support ES modules natively
 	// Chrome 61+, Firefox 60+, Safari 11+, Edge 16+, Opera 48+
-	target: ["chrome61", "firefox60", "safari11", "edge16", "opera48"],
+	target: ["chrome61", "firefox60", "safari11", "edge16", "opera48"]
 });

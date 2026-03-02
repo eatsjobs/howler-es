@@ -1,5 +1,5 @@
 {
-	"name": "howler",
+	"name": "howler-es",
 	"version": "3.0.0-alpha.1",
 	"description": "Javascript audio library for the modern web.",
 	"homepage": "https://howlerjs.com",
@@ -9,6 +9,8 @@
 		"howler",
 		"howler.js",
 		"howler.es",
+		"howler-es",
+		"howler-esm",
 		"audio",
 		"sound",
 		"web audio",
@@ -34,8 +36,8 @@
 	"devDependencies": {
 		"@arethetypeswrong/core": "~0.18.2",
 		"@biomejs/biome": "2.4.5",
-		"publint": "~0.3.15",
-		"tsdown": "~0.16.6",
+		"publint": "~0.3.18",
+		"tsdown": "~0.20.3",
 		"typescript": "~5.9.3"
 	},
 	"main": "dist/index.js",
