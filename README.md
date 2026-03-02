@@ -960,6 +960,25 @@ If you want your `webm` files to be seekable in Firefox, be sure to encode them 
 ffmpeg -i sound1.wav -dash 1 sound1.webm
 ```
 
+### Release
+
+Releases are published to npm automatically via GitHub Actions using OIDC (no token stored as a secret).
+
+**To publish a new version:**
+
+```bash
+npm version patch          # 3.0.0-alpha.1 → 3.0.0-alpha.2  (bug fixes)
+npm version minor          # x.y.z → x.(y+1).0               (new features)
+npm version major          # x.y.z → (x+1).0.0               (breaking changes)
+npm version 3.0.0          # specific version
+```
+
+This single command:
+1. Runs `npm run lint && npm run build` — aborts if either fails
+2. Bumps the version in `package.json`, commits it, and creates a git tag
+3. Pushes the commit and tag to GitHub
+4. GitHub Actions publishes to npm with signed provenance via OIDC
+
 ### License
 
 Copyright (c) 2013-2021 [James Simpson](https://twitter.com/GoldFireStudios) and [GoldFire Studios, Inc.](http://goldfirestudios.com)
