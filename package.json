@@ -30,7 +30,8 @@
 		"serve-tests": "npx serve .",
 		"build": "tsdown",
 		"size": "node scripts/check-size.js",
-		"release": "npm run build && git add dist && git commit -m 'build: update dist files' && npm publish",
+		"preversion": "npm run lint && npm run build",
+		"postversion": "git push --follow-tags",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
 	},
@@ -60,8 +61,8 @@
 		"access": "public"
 	},
 	"files": [
-		"src",
 		"dist",
-		"LICENSE.md"
+		"LICENSE.md",
+		"README.md"
 	]
 }
