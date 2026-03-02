@@ -1,9 +1,7 @@
 /*!
- *  howler.js v3.0.0-alpha.1
- *  howlerjs.com
+ *  @eatsjobs/howler-es v3.0.0-alpha.1
+ *  https://github.com/eatsjobs/howler.es
  *  (c) 2013-2025, James Simpson of GoldFire Studios
- *  goldfirestudios.com
- *  https://github.com/goldfire/howler.js
  *  MIT License
  */
 // Core library exports

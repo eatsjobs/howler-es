@@ -17,7 +17,7 @@ export default defineConfig({
 	},
 	report: true,
 	banner: {
-		js: `// howler.js v3.0.0-alpha.1\n// howlerjs.com\n// (c) 2013-2025, James Simpson of GoldFire Studios\n// goldfirestudios.com\n// MIT License\n Ported to ES Modules by @eatsjobs`,
+		js: `// @eatsjobs/howler-es v3.0.0-alpha.1\n// https://github.com/eatsjobs/howler.es\n// (c) 2013-2025, James Simpson of GoldFire Studios\n// MIT License`,
 	},
 	// Target browsers that support ES modules natively
 	// Chrome 61+, Firefox 60+, Safari 11+, Edge 16+, Opera 48+

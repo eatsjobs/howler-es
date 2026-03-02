@@ -1,5 +1,5 @@
 {
-	"name": "howler-es",
+	"name": "@eatsjobs/howler-es",
 	"version": "3.0.0-alpha.1",
 	"description": "Javascript audio library for the modern web.",
 	"homepage": "https://howlerjs.com",
@@ -24,9 +24,10 @@
 	"author": "James Simpson <james@goldfirestudios.com> (http://goldfirestudios.com)",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/goldfire/howler.js.git"
+		"url": "git+https://github.com/eatsjobs/howler.es.git"
 	},
 	"scripts": {
+		"serve-tests": "npx serve .",
 		"build": "tsdown",
 		"size": "node scripts/check-size.js",
 		"release": "npm run build && git add dist && git commit -m 'build: update dist files' && npm publish",
@@ -37,6 +38,7 @@
 		"@arethetypeswrong/core": "~0.18.2",
 		"@biomejs/biome": "2.4.5",
 		"publint": "~0.3.18",
+		"serve": "^14.2.5",
 		"tsdown": "~0.20.3",
 		"typescript": "~5.9.3"
 	},
@@ -54,6 +56,9 @@
 		}
 	},
 	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
 	"files": [
 		"src",
 		"dist",

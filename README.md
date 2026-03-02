@@ -8,7 +8,7 @@ Additional information, live demos and a user showcase are available at [howlerj
 
 Follow on Twitter for howler.js and development-related discussion: [@GoldFireStudios](https://twitter.com/goldfirestudios).
 
-### Features
+## Features
 
 * Single API for all audio needs
 * Defaults to Web Audio API and falls back to HTML5 Audio
@@ -71,32 +71,31 @@ Howler.js v3.0+ requires ES Module support. The library works in all modern brow
 
 Several options to get up and running:
 
-* Clone the repo: `git clone https://github.com/goldfire/howler.js.git`
-* Install with [npm](https://www.npmjs.com/package/howler): `npm install howler`
-* Install with [Yarn](https://yarnpkg.com/en/package/howler): `yarn add howler`
-* Install with [Bower](http://bower.io/): `bower install howler`
+* Clone the repo: `git clone https://github.com/eatsjobs/howler.es.git`
+* Install with [npm](https://www.npmjs.com/package/@eatsjobs/howler-es): `npm install @eatsjobs/howler-es`
+* Install with [Yarn](https://yarnpkg.com/en/package/@eatsjobs/howler-es): `yarn add @eatsjobs/howler-es`
 * Hosted CDN: [`cdnjs`](https://cdnjs.com/libraries/howler) [`jsDelivr`](https://www.jsdelivr.com/projects/howler.js)
 
 As an ES Module (ESM):
 
 ```typescript
-import { Howl, Howler } from 'howler';
-import { SpatialAudioPlugin } from 'howler/plugins/spatial';
+import { Howl, Howler } from '@eatsjobs/howler-es';
+import { SpatialAudioPlugin } from '@eatsjobs/howler-es/plugins/spatial';
 ```
 
 Howler.js v3.0+ is distributed exclusively as ES Modules. For CommonJS support, use v2.x.
 
 Distribution files:
 
-* **Main entry point** (`howler`): Core Howler.js library
+* **Main entry point** (`@eatsjobs/howler-es`): Core Howler.js library
   * `dist/index.js` - Main entry point with Howler, Howl, Sound classes
   * `dist/howler.core.js` - Core audio implementation
   * `dist/index.d.ts` - TypeScript type definitions
-* **Spatial plugin entry point** (`howler/plugins/spatial`): Spatial audio plugin
+* **Spatial plugin entry point** (`@eatsjobs/howler-es/plugins/spatial`): Spatial audio plugin
   * `dist/plugins/spatial.js` - Spatial audio plugin with 3D positioning support
   * `dist/plugins/spatial-plugin.js` - SpatialAudioPlugin implementation
   * `dist/plugins/spatial.d.ts` - Spatial plugin type definitions
-* **Plugin System** (`howler`): Hook-based plugin architecture
+* **Plugin System** (`@eatsjobs/howler-es`): Hook-based plugin architecture
   * `dist/plugins/plugin.js` - PluginManager and HowlerPlugin base class
 
 **Note**: Howler.js v3.0+ is built entirely in TypeScript and distributed as ES Modules only, enabling better tree-shaking and code splitting. The plugin system allows safe extension without prototype mutation.
@@ -118,8 +117,8 @@ The plugin system is built around:
 Plugins extend `HowlerPlugin` and implement hooks:
 
 ```typescript
-import { HowlerPlugin, type PluginHooks } from 'howler';
-import type { HowlerGlobal, Howl } from 'howler';
+import { HowlerPlugin, type PluginHooks } from '@eatsjobs/howler-es';
+import type { HowlerGlobal, Howl } from '@eatsjobs/howler-es';
 
 export class MyPlugin extends HowlerPlugin {
   readonly name = 'my-plugin';
@@ -144,14 +143,14 @@ Register plugins directly with Howler:
 **TypeScript/ES Modules:**
 
 ```typescript
-import { Howler, Howl } from 'howler';
-import { SpatialAudioPlugin, type SpatialHowler, type SpatialHowl } from 'howler/plugins/spatial';
+import { Howler, Howl } from '@eatsjobs/howler-es';
+import { SpatialAudioPlugin, type SpatialHowler, type SpatialHowl } from '@eatsjobs/howler-es/plugins/spatial';
 
 // Register the spatial audio plugin
 Howler.addPlugin(new SpatialAudioPlugin());
 
 // Type annotations for TypeScript support
-import type { SpatialHowlOptions } from 'howler/plugins/spatial';
+import type { SpatialHowlOptions } from '@eatsjobs/howler-es/plugins/spatial';
 
 const listener: SpatialHowler = Howler as SpatialHowler;
 const sound: SpatialHowl = new Howl({
@@ -178,16 +177,16 @@ listener.orientation(1, 0, 0, 0, 1, 0);
   <script type="importmap">
     {
       "imports": {
-        "howler": "https://cdn.jsdelivr.net/npm/howler@3/dist/index.js",
-        "howler/plugins/spatial": "https://cdn.jsdelivr.net/npm/howler@3/dist/plugins/spatial.js"
+        "howler": "https://cdn.jsdelivr.net/npm/@eatsjobs/howler-es@3/dist/index.js",
+        "howler/plugins/spatial": "https://cdn.jsdelivr.net/npm/@eatsjobs/howler-es@3/dist/plugins/spatial.js"
       }
     }
   </script>
   
   <script type="module">
     // Import using the import map aliases
-    import { Howler, Howl } from 'howler';
-    import { SpatialAudioPlugin } from 'howler/plugins/spatial';
+    import { Howler, Howl } from '@eatsjobs/howler-es';
+    import { SpatialAudioPlugin } from '@eatsjobs/howler-es/plugins/spatial';
 
     const spatialPlugin = new SpatialAudioPlugin()
     // Register the spatial audio plugin
@@ -223,8 +222,8 @@ listener.orientation(1, 0, 0, 0, 1, 0);
 #### Managing Plugins
 
 ```typescript
-import { Howler } from 'howler';
-import { SpatialAudioPlugin } from 'howler/plugins/spatial';
+import { Howler } from '@eatsjobs/howler-es';
+import { SpatialAudioPlugin } from '@eatsjobs/howler-es/plugins/spatial';
 
 const spatialPlugin = new SpatialAudioPlugin();
 
@@ -305,7 +304,7 @@ Available hooks that plugins can implement in their `getHooks()` method:
 **TypeScript:**
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sound.mp3']
@@ -333,7 +332,7 @@ sound.play();
   </script>
   
   <script type="module">
-    import { Howl } from 'howler';
+    import { Howl } from '@eatsjobs/howler-es';
 
     const sound = new Howl({
       src: ['sound.mp3']
@@ -348,7 +347,7 @@ sound.play();
 #### Streaming audio (for live audio or large files)
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['stream.mp3'],
@@ -361,7 +360,7 @@ sound.play();
 ##### More playback options
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sound.webm', 'sound.mp3', 'sound.wav'],
@@ -377,7 +376,7 @@ const sound = new Howl({
 ##### Define and play a sound sprite
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sounds.webm', 'sounds.mp3'],
@@ -395,7 +394,7 @@ sound.play('laser');
 ##### Listen for events
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sound.webm', 'sound.mp3']
@@ -415,7 +414,7 @@ sound.on('end', () => {
 ##### Control multiple sounds
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sound.webm', 'sound.mp3']
@@ -452,7 +451,7 @@ sound.play();
 Howler.volume(0.5);
 ```
 
-More in-depth examples (with accompanying live demos) can be found in the [examples directory](https://github.com/goldfire/howler.js/tree/master/examples).
+More in-depth examples (with accompanying live demos) can be found in the [examples directory](https://github.com/eatsjobs/howler.es/tree/master/examples).
 
 ## Core
 
@@ -491,7 +490,7 @@ Set to `true` to load the audio muted.
 Define a sound sprite for the sound. The offset and duration are defined in milliseconds. A third (optional) parameter is available to set a sprite as looping. An easy way to generate compatible sound sprites is with [audiosprite](https://github.com/tonistiigi/audiosprite).
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 new Howl({
   src: ['sounds.mp3'],
@@ -518,7 +517,7 @@ howler.js automatically detects your file format from the extension, but you may
 When using Web Audio, howler.js uses an XHR request to load the audio files. If you need to send custom headers, set the HTTP method or enable `withCredentials` ([see reference](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)), include them with this parameter. Each is optional (method defaults to `GET`, headers default to `null` and withCredentials defaults to `false`). For example:
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 // Using each of the properties.
 new Howl({
@@ -878,7 +877,7 @@ Get/set the direction the listener is pointing in the 3D cartesian space. A fron
 Each `new Howl()` instance is also a group. You can play multiple sound instances from the `Howl` and control them individually or as a group (note: each `Howl` can only contain a single audio file). For example, the following plays two sounds from a sprite, changes their volume together and then pauses both of them at the same time.
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sound.webm', 'sound.mp3'],
@@ -914,7 +913,7 @@ Howler.autoUnlock = false;
 If you try to play audio automatically on page load, you can listen to a `playerror` event and then wait for the `unlock` event to try and play the audio again:
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const sound = new Howl({
   src: ['sound.webm', 'sound.mp3'],
@@ -933,7 +932,7 @@ sound.play();
 Full support for playback of the Dolby Audio format (currently support in Edge and Safari) is included. However, you must specify that the file you are loading is `dolby` since it is in a `mp4` container.
 
 ```typescript
-import { Howl } from 'howler';
+import { Howl } from '@eatsjobs/howler-es';
 
 const dolbySound = new Howl({
   src: ['sound.mp4', 'sound.webm', 'sound.mp3'],
@@ -957,14 +956,8 @@ If you want your `webm` files to be seekable in Firefox, be sure to encode them 
 ffmpeg -i sound1.wav -dash 1 sound1.webm
 ```
 
-### Sponsors
-
-Support the ongoing development of howler.js and get your logo on our README with a link to your site [[become a sponsor](https://github.com/sponsors/goldfire)]. You can also become a backer at a lower tier and get your name in the [BACKERS](https://github.com/goldfire/howler.js/blob/master/BACKERS.md) list. All support is greatly appreciated!
-
-[![GoldFire Studios](https://s3.amazonaws.com/howler.js/sponsors/goldfire_studios.png "GoldFire Studios")](https://goldfirestudios.com)
-
 ### License
 
 Copyright (c) 2013-2021 [James Simpson](https://twitter.com/GoldFireStudios) and [GoldFire Studios, Inc.](http://goldfirestudios.com)
 
-Released under the [MIT License](https://github.com/goldfire/howler.js/blob/master/LICENSE.md).
+Released under the [MIT License](https://github.com/eatsjobs/howler.es/blob/master/LICENSE.md).
