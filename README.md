@@ -735,7 +735,7 @@ Each HTML5 Audio object must be unlocked individually, so we keep a global pool 
 
 #### autoSuspend `Boolean` `true`
 
-Automatically suspends the Web Audio AudioContext after 30 seconds of inactivity to decrease processing and energy usage. Automatically resumes upon new playback. Set this property to `false` to disable this behavior.
+Automatically suspends the Web Audio AudioContext after 15 seconds of inactivity to decrease processing and energy usage. Automatically resumes upon new playback. Set this property to `false` to disable this behavior.
 
 #### ctx `Boolean` *`Web Audio Only`*
 
@@ -774,6 +774,40 @@ Check supported audio codecs. Returns `true` if the codec is supported in the cu
 #### unload()
 
 Unload and destroy all currently loaded Howl objects. This will immediately stop all sounds and remove them from cache.
+
+### Type Guards
+
+#### isSpatialAudio(sound)
+
+A TypeScript type guard function to check if a sound or Howl instance has spatial audio enabled. This is useful when working with spatial audio to safely access panner node properties without type assertions.
+
+Returns `true` if the object has a panner node (indicating spatial audio is active), allowing TypeScript to narrow the type for type-safe access to spatial properties.
+
+* **sound**: `unknown` The sound object to check (Sound or Howl instance).
+* **returns**: `boolean` True if the sound has spatial audio enabled.
+
+```typescript
+import { Howl, isSpatialAudio } from '@eatsjobs/howler-es';
+
+const sound = new Howl({
+  src: ['sound.mp3'],
+  pos: [10, 20, 30], // Enable spatial audio
+});
+
+// Type-safe check for spatial audio
+if (isSpatialAudio(sound)) {
+  // sound._panner is now guaranteed to be PannerNode | StereoPannerNode
+  sound._panner.disconnect();
+}
+
+// Can also be used to filter arrays
+const allSounds = [sound1, sound2, sound3];
+const spatialSounds = allSounds.filter(isSpatialAudio);
+spatialSounds.forEach(s => {
+  // All sounds in this array have spatial audio enabled
+  console.log(s._panner);
+});
+```
 
 ## Plugin: Spatial
 

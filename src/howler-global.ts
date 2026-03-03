@@ -28,6 +28,9 @@ export class HowlerGlobal {
 	autoUnlock: boolean = true;
 	state: string = "suspended";
 	_audioUnlocked: boolean = false;
+	_isUnlocking: boolean = false;
+	_unlockedListeners: ((event: Event) => void) | null = null;
+	_unlockTimeoutId: ReturnType<typeof setTimeout> | null = null;
 	_scratchBuffer: AudioBuffer | null = null;
 	_suspendTimer: ReturnType<typeof setTimeout> | null = null;
 	_resumeAfterSuspend?: boolean;
@@ -293,11 +296,12 @@ export class HowlerGlobal {
 	}
 
 	_unlockAudio(): void {
-		if (this._audioUnlocked || !this.ctx) {
+		// Prevent duplicate listener registration
+		if (this._isUnlocking || this._audioUnlocked || !this.ctx) {
 			return;
 		}
 
-		this._audioUnlocked = false;
+		this._isUnlocking = true;
 		this.autoUnlock = false;
 
 		if (!this._mobileUnloaded && this.ctx.sampleRate !== 44100) {
@@ -353,6 +357,14 @@ export class HowlerGlobal {
 			source.onended = () => {
 				source.disconnect(0);
 				this._audioUnlocked = true;
+				this._isUnlocking = false;
+				this._unlockedListeners = null;
+
+				// Clear the cleanup timeout
+				if (this._unlockTimeoutId !== null) {
+					clearTimeout(this._unlockTimeoutId);
+					this._unlockTimeoutId = null;
+				}
 
 				document.removeEventListener("touchstart", unlock, true);
 				document.removeEventListener("touchend", unlock, true);
@@ -365,10 +377,26 @@ export class HowlerGlobal {
 			};
 		};
 
+		this._unlockedListeners = unlock;
 		document.addEventListener("touchstart", unlock, true);
 		document.addEventListener("touchend", unlock, true);
 		document.addEventListener("click", unlock, true);
 		document.addEventListener("keydown", unlock, true);
+
+		// Cleanup timeout: if audio never unlocks within 5 seconds, remove the listeners
+		// This prevents memory leaks if the audio context never fires the onended callback
+		this._unlockTimeoutId = setTimeout(() => {
+			if (!this._audioUnlocked && this._unlockedListeners) {
+				this._isUnlocking = false;
+				const listener = this._unlockedListeners;
+				document.removeEventListener("touchstart", listener, true);
+				document.removeEventListener("touchend", listener, true);
+				document.removeEventListener("click", listener, true);
+				document.removeEventListener("keydown", listener, true);
+				this._unlockedListeners = null;
+				this._unlockTimeoutId = null;
+			}
+		}, 15000);
 	}
 
 	_obtainHtml5Audio(): HTMLAudioElementWithUnlocked {
@@ -454,7 +482,7 @@ export class HowlerGlobal {
 			};
 
 			this.ctx?.suspend().then(handleSuspension, handleSuspension);
-		}, 30000);
+		}, 15000);
 	}
 
 	_autoResume(): void {

@@ -12,6 +12,7 @@ import {
 	type HTMLAudioElementWithUnlocked,
 	isGainNode,
 	isHTMLAudioElement,
+	isSpatialAudio,
 	type QueueItem,
 } from "./types";
 
@@ -1456,9 +1457,22 @@ class Howl {
 			}
 
 			if (this._sounds[i]._ended) {
-				const node = this._sounds[i]._node;
+				const sound = this._sounds[i];
+				const node = sound._node;
+
+				// Disconnect the main audio node
 				if (this._webAudio && node && isGainNode(node)) {
 					node.disconnect(0);
+				}
+
+				// Disconnect any panner node created by spatial audio plugin
+				if (isSpatialAudio(sound) && sound._panner) {
+					try {
+						sound._panner.disconnect(0);
+					} catch {
+						// Ignore errors if panner is already disconnected
+					}
+					sound._panner = undefined as any;
 				}
 
 				this._sounds.splice(i, 1);

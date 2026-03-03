@@ -196,3 +196,73 @@ export function isGainNode(
 ): node is GainNodeWithBufferSource {
 	return node !== null && "gain" in node && "connect" in node;
 }
+
+/**
+ * Extended Sound with spatial audio properties.
+ * Added dynamically by the SpatialAudioPlugin.
+ *
+ * @internal
+ */
+export interface SpatialSound {
+	/** 3D position of the sound [x, y, z] */
+	_pos?: [number, number, number];
+	/** Stereo panning value (-1.0 to 1.0) */
+	_stereo?: number | null;
+	/** Direction the audio source is pointing [x, y, z] */
+	_orientation?: [number, number, number];
+	/** Panner node for spatial audio */
+	_panner?: PannerNode;
+	/** Panner attributes configuration */
+	_pannerAttr?: PannerOptions;
+}
+
+/**
+ * Extended Howl options with spatial audio properties.
+ * Used when the SpatialAudioPlugin is registered.
+ */
+export interface SpatialHowlOptions extends HowlOptions {
+	/** 3D position of the sound [x, y, z] */
+	pos?: [number, number, number];
+	/** Stereo panning value (-1.0 to 1.0) */
+	stereo?: number | null;
+	/** Direction the audio source is pointing [x, y, z] */
+	orientation?: [number, number, number];
+	/** Panner node attributes */
+	pannerAttr?: PannerOptions;
+}
+
+/**
+ * Type guard to check if a sound or Howl instance has spatial audio enabled.
+ *
+ * This function verifies that a sound has spatial audio properties (panner node)
+ * and narrows the type to allow safe access to spatial audio-specific properties.
+ * Useful for checking if spatial audio has been initialized on a sound before
+ * accessing or manipulating panner nodes.
+ *
+ * @param sound - The sound object to check (Sound or Howl instance)
+ * @returns True if the object has a panner node for spatial audio
+ *
+ * @example
+ * ```typescript
+ * // Check before accessing panner
+ * if (isSpatialAudio(sound)) {
+ *   sound._panner.disconnect();
+ * }
+ *
+ * // Use in type-safe code
+ * const sounds = getAllSounds();
+ * const spatialSounds = sounds.filter(isSpatialAudio);
+ * spatialSounds.forEach(sound => {
+ *   // sound._panner is guaranteed to exist here
+ *   configurePanner(sound._panner);
+ * });
+ * ```
+ */
+export function isSpatialAudio(sound: unknown): sound is Record<
+	string,
+	unknown
+> & {
+	_panner: PannerNode | StereoPannerNode;
+} {
+	return sound !== null && typeof sound === "object" && "_panner" in sound;
+}

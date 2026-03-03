@@ -5,7 +5,7 @@ import {
 	type HowlerGlobal,
 	type Sound,
 } from "../howler.core";
-import { isGainNode } from "../types";
+import { isGainNode, isSpatialAudio } from "../types";
 import { globalPluginManager, HowlerPlugin, type PluginHooks } from "./plugin";
 
 /**
@@ -609,7 +609,7 @@ export class SpatialAudioPlugin extends HowlerPlugin {
 					sound._stereo = pan ?? null;
 
 					// Create a new panner node if one doesn't already exist
-					if (!sound._panner) {
+					if (!isSpatialAudio(sound)) {
 						// Make sure we have a position to setup the node with
 						if (!sound._pos) {
 							sound._pos = self._pos || [0, 0, -0.5];
@@ -665,7 +665,7 @@ export class SpatialAudioPlugin extends HowlerPlugin {
 						sound._pos = [x, y, z];
 
 						// Create a new panner node if one doesn't already exist
-						if (!sound._panner) {
+						if (!isSpatialAudio(sound)) {
 							setupPanner(sound, "spatial");
 						} else if (sound._panner instanceof PannerNode) {
 							// Update position
@@ -740,7 +740,7 @@ export class SpatialAudioPlugin extends HowlerPlugin {
 						sound._orientation = [x, y, z];
 
 						// Create a new panner node if one doesn't already exist
-						if (!sound._panner) {
+						if (!isSpatialAudio(sound)) {
 							if (!sound._pos) {
 								sound._pos = self._pos || [0, 0, -0.5];
 							}
@@ -910,10 +910,10 @@ export class SpatialAudioPlugin extends HowlerPlugin {
 					parent.stereo(self._stereo, self._id);
 				} else if (self._pos) {
 					parent.pos(self._pos[0], self._pos[1], self._pos[2], self._id);
-				} else if (self._panner) {
+				} else if (isSpatialAudio(self)) {
 					// Disconnect the panner
 					self._panner.disconnect(0);
-					self._panner = undefined;
+					self._panner = undefined as any;
 					parent._refreshBuffer(self);
 				}
 
@@ -994,18 +994,18 @@ export class SpatialAudioPlugin extends HowlerPlugin {
 					const sound = howl._sounds[j] as any;
 
 					// Disconnect and remove panner nodes
-					if (sound._panner) {
+					if (isSpatialAudio(sound)) {
 						const wasPlaying = !sound._paused;
 
 						try {
 							// Disconnect panner from the audio graph
 							sound._panner.disconnect(0);
-						} catch (e) {
+						} catch {
 							// Panner may already be disconnected
 						}
 
 						// Remove panner reference
-						sound._panner = undefined;
+						sound._panner = undefined as any;
 
 						// If the sound was playing, we need to stop it and clean up the buffer source
 						// The user will need to call play() again to resume without spatial audio

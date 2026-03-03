@@ -11,3 +11,6 @@ export type { PluginHooks } from "./plugins";
 // Plugin system exports
 export { globalPluginManager, HowlerPlugin, PluginManager } from "./plugins";
 export type { HowlOptions } from "./types";
+
+// Type guards and utilities
+export { isSpatialAudio } from "./types";
