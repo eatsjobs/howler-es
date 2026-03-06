@@ -247,9 +247,13 @@ Adds 3D spatial audio and stereo panning support:
 **TypeScript/ES Modules:**
 
 ```typescript
-import { Howler, Howl } from 'howler';
-import { SpatialAudioPlugin } from 'howler/plugins/spatial';
-import type { SpatialHowler, SpatialHowl, SpatialHowlOptions } from 'howler/plugins/spatial';
+import { Howler, Howl } from '@eatsjobs/howler-es';
+import { 
+  SpatialAudioPlugin, 
+  type SpatialHowler, 
+  type SpatialHowl, 
+  type SpatialHowlOptions 
+} from '@eatsjobs/howler-es/plugins/spatial';
 
 // Register the plugin
 Howler.addPlugin(new SpatialAudioPlugin());
